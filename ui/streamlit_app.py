@@ -4,8 +4,8 @@ import streamlit as st
 
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
-st.set_page_config(page_title="Task Manager AI", page_icon="🤖")
-st.title("Task Manager AI")
+st.set_page_config(page_title="Task AI", page_icon="🤖")
+st.title("Task AI")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
