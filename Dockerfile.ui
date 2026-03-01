@@ -1,0 +1,16 @@
+FROM python:3.14-rc-slim
+
+WORKDIR /app
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev
+
+COPY streamlit_app.py ./
+
+ENV API_URL=http://fastapi:8000
+
+EXPOSE 8501
+
+CMD ["uv", "run", "streamlit", "run", "streamlit_app.py", "--server.address", "0.0.0.0", "--server.port", "8501"]

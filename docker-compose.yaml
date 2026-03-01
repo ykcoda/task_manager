@@ -29,3 +29,17 @@ services:
     depends_on:
       - mcp-server
     restart: unless-stopped
+
+  ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.ui
+    ports:
+      - "8501:8501"
+    environment:
+      API_URL: "http://fastapi:8000"
+    volumes:
+      - ./streamlit_app.py:/app/streamlit_app.py
+    depends_on:
+      - fastapi
+    restart: unless-stopped

@@ -12,4 +12,6 @@ dependencies = [
     "mcp>=1.26.0",
     "scalar-fastapi>=1.6.2",
     "sqlmodel>=0.0.37",
+    "streamlit>=1.43.0",
+    "requests>=2.32.0",
 ]
