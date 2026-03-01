@@ -9,7 +9,7 @@ from agent import get_agent
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    print("Loaded agent....")
+    print("Loaded agent.......")
     await get_agent()
     yield
 
