@@ -8,9 +8,6 @@ services:
     environment:
       HOST: "0.0.0.0"
       PORT: "8001"
-    volumes:
-      - ./mcp_server.py:/app/mcp_server.py
-    command: ["uv", "run", "watchfiles", "python mcp_server.py", "."]
     restart: unless-stopped
 
   fastapi:
@@ -22,12 +19,10 @@ services:
     environment:
       MCP_SERVER_URL: "http://mcp-server:8001/sse"
       OPENAI_API_KEY: "${OPENAI_API_KEY}"
-    volumes:
-      - ./main.py:/app/main.py
-      - ./agent.py:/app/agent.py
-    command: ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+      ALLOWED_ORIGINS: "http://localhost:8501"
     depends_on:
-      - mcp-server
+      mcp-server:
+        condition: service_healthy
     restart: unless-stopped
 
   ui:
@@ -38,8 +33,7 @@ services:
       - "8501:8501"
     environment:
       API_URL: "http://fastapi:8000"
-    volumes:
-      - ./streamlit_app.py:/app/streamlit_app.py
     depends_on:
-      - fastapi
+      fastapi:
+        condition: service_healthy
     restart: unless-stopped
