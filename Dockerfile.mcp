@@ -1,0 +1,17 @@
+FROM python:3.14-rc-slim
+
+WORKDIR /app
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
+
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen --no-dev
+
+COPY mcp_server.py ./
+
+ENV HOST=0.0.0.0
+ENV PORT=8001
+
+EXPOSE 8001
+
+CMD ["uv", "run", "python", "mcp_server.py"]
