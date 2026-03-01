@@ -8,6 +8,7 @@ services:
     environment:
       HOST: "0.0.0.0"
       PORT: "8001"
+      FASTAPI_BASE_URL: "http://fastapi:8000"
     restart: unless-stopped
 
   fastapi:
